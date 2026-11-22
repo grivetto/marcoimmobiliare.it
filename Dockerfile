@@ -12,6 +12,7 @@ COPY investimenti-immobiliari-in-corso /usr/share/nginx/html/investimenti-immobi
 COPY investimenti-immobiliari-conclusi /usr/share/nginx/html/investimenti-immobiliari-conclusi
 COPY contatti /usr/share/nginx/html/contatti
 COPY blog /usr/share/nginx/html/blog
+COPY v2 /usr/share/nginx/html/v2
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
