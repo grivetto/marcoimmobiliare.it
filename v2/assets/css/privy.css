@@ -1697,7 +1697,7 @@ button {
     grid-template-columns: auto 1fr auto;
     gap: 10px;
   }
-  .privy-menu-btn span:last-child {
+  .privy-menu-btn > span:last-child {
     display: none;
   }
   .privy-header__brand-main {
