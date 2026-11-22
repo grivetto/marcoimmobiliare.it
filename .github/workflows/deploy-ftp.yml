@@ -1,0 +1,42 @@
+name: Deploy to marcoimmobiliare.it (FTP)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      full_sync:
+        description: "Upload all static files instead of incremental diff"
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-marcoimmobiliare-ftp
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publish v1 & v2 via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Upload updated site files to marcoimmobiliare.it (/www)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          REMOTE_ROOT: /www
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+          FULL_SYNC: ${{ github.event_name == 'workflow_dispatch' && inputs.full_sync || 'false' }}
+        run: python3 .github/scripts/deploy_ftp.py

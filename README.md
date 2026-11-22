@@ -1,25 +1,22 @@
 # Real Estate Marco Grivetto (`marcoimmobiliare.it`)
 
-Sito istituzionale e catalogo immobiliare di **Marco Grivetto** (*Consulente Immobiliare — Royal Team Immobiliare*, P.IVA `10140700013`) per le sedi di **Torino** e **Asti**.
+Sito istituzionale e catalogo immobiliare di **Marco Grivetto** (*Consulente Immobiliare — Royal Team Immobiliare*, P.IVA `10140700013`) per le sedi di **Torino** e **Asti**, ottimizzato sia per desktop sia per dispositivi mobili.
 
 ## Struttura delle Versioni
 
 - **Versione A (`/`)** — Edizione *Belgrade Arbor Architecture & Living*
-  - Hero video architettonico in apertura con preloader, sezione `#Introduction` con animazione scroll-driven su clip SVG ed ombre organiche, calcolatore di rendimento investimenti, catalogo proprietà Royal Team Immobiliare (`29` in vendita + `5` in affitto), pagine dedicate (`/chi-siamo/`, `/appartamenti-in-vendita/`, `/investi-con-noi/`, `/investimenti-immobiliari-in-corso/`, `/investimenti-immobiliari-conclusi/`, `/contatti/`, `/blog/`).
+  - Hero video architettonico in apertura con preloader, sezione `#Introduction` adattiva (clip SVG ridimensionati su mobile per massima leggibilità), calcolatore di rendimento investimenti, banner privacy compatto mobile-first e catalogo proprietà Royal Team Immobiliare (`29` in vendita + `5` in affitto) su tutte le 8 pagine (`/`, `/chi-siamo/`, `/appartamenti-in-vendita/`, `/investi-con-noi/`, `/investimenti-immobiliari-in-corso/`, `/investimenti-immobiliari-conclusi/`, `/contatti/`, `/blog/`).
 - **Versione B (`/v2/`)** — Edizione *Privy Collection* (reverse-engineered con REA da `sobha-privy-collection.com`)
   - Motore desktop a inerzia di rotella mouse + *magnetic gravity wells* (`v2/assets/js/privy-scroll.js`)
-  - Header dinamico con inversione automatica chiaro/scuro (`.ui-dark` / `.ui-light`) in base alla sezione attiva
-  - Video astratto *obsidian ribbons* (`v2/assets/media/ribbons.mp4`) e cursore/barra di progresso scroll
-  - Trittico espansivo `#about`, manifesto word-scrub `#manifesto`, 3 mondi pinned `#mondi`, slider orizzontale sticky *I Sei Pilastri* (`#pilastri`), portfolio filtrabile completo da 34 immobili (`#catalogo` / `v2/assets/js/properties-data.js`), sedi pinned `#sedi`, modale mappa interattiva Torino/Asti e dossier contatti `grivetto.it`.
+  - Su mobile (`<= 960px` / dispositivi touch): scroll nativo fluido, header compatto su singola riga, indizi tattili ("Scorri verso il basso" / "Scorri lateralmente"), carousel orizzontale con scroll-snap sui *Sei Pilastri*, tab catalogo scorrevoli e campi form `16px` anti-zoom iOS.
+  - Header dinamico con inversione automatica chiaro/scuro (`.ui-dark` / `.ui-light`), video astratto *obsidian ribbons*, portfolio filtrabile completo da 34 immobili (`#catalogo`), sedi pinned `#sedi`, modale mappa Torino/Asti e dossier contatti `grivetto.it`.
 
-## Pubblicazione & Deploy
+## Pubblicazione Automatica (GitHub Actions -> FTP)
 
-- **Repository GitHub**: `https://github.com/grivetto/marcoimmobiliare.it` (branch `main`, revisioni atomiche per milestone)
-- **Hosting FTP TB-Hosting (`marcoimmobiliare.it`)**:
-  - Root Versione A: `/www/`
-  - Sottocartella Versione B: `/www/v2/`
-- **Google Cloud Run (`dedonato-cicli-2026`, `europe-west1`)**:
-  - Servizio principale: `real-estate-torino` (`Dockerfile` + `nginx.conf`)
+Ogni `push` sul branch `main` attiva automaticamente il workflow [`.github/workflows/deploy-ftp.yml`](.github/workflows/deploy-ftp.yml):
+- Esegue [`.github/scripts/deploy_ftp.py`](.github/scripts/deploy_ftp.py) usando i secret cifrati del repository (`FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`).
+- Pubblica in `/www/` i file statici modificati rispetto al commit precedente (o l'intero sito se avviato manualmente via `workflow_dispatch` con `full_sync: true`), verificando la dimensione esatta in byte tramite `FTP SIZE` e controllando `HTTP 200` su `https://www.marcoimmobiliare.it/` e `https://www.marcoimmobiliare.it/v2/`.
+- Specchiato inoltre su Google Cloud Run (`dedonato-cicli-2026`, `europe-west1`, servizio `real-estate-torino`).
 
 ## Contatti Ufficiali (`grivetto.it`)
 
