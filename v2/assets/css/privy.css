@@ -1575,11 +1575,24 @@ button {
   padding: 18px 20px;
 }
 
+.hero-scroll-cue--mobile,
+.pilastri-hint--mobile {
+  display: none;
+}
+
 /* =========================================================
    RESPONSIVE BREAKPOINTS (MOBILE <= 960px)
    ========================================================= */
 @media (max-width: 960px) {
   .privy-header__link { display: none; }
+  .hero-scroll-cue--desktop,
+  .pilastri-hint--desktop {
+    display: none;
+  }
+  .hero-scroll-cue--mobile,
+  .pilastri-hint--mobile {
+    display: inline-block;
+  }
   .manifesto-grid,
   .mondi-sticky,
   .sedi-sticky,
@@ -1594,21 +1607,59 @@ button {
   .privy-sedi {
     min-height: auto;
   }
-  .about-sticky,
+  .about-sticky {
+    position: relative;
+    height: auto;
+    min-height: auto;
+    padding: 68px 20px 44px;
+  }
   .mondi-sticky,
-  .pilastri-sticky,
   .sedi-sticky {
     position: relative;
     height: auto;
     min-height: auto;
-    padding: 72px 0;
+    padding: 0;
+  }
+  .mondi-left,
+  .sedi-left {
+    padding: 36px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--c-line-dark);
+  }
+  .mondi-right,
+  .sedi-right {
+    min-height: 290px;
+  }
+  .pilastri-sticky {
+    position: relative;
+    height: auto;
+    min-height: auto;
+    padding: 64px 0 44px;
   }
   .pilastri-track-viewport {
     overflow-x: auto;
+    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
   }
   .pilastri-track {
     transform: none !important;
+  }
+  .pilastri-card {
+    width: 82vw;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+  .catalogo-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    padding-bottom: 6px;
+  }
+  .catalogo-tab {
+    white-space: nowrap;
+    min-height: 44px;
   }
   .catalogo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1619,6 +1670,75 @@ button {
   }
   .hero-map-card {
     display: none;
+  }
+  .privy-field input,
+  .privy-field select,
+  .privy-field textarea {
+    font-size: 16px;
+  }
+  .privy-btn,
+  .privy-menu-btn,
+  .privy-map-trigger,
+  .privy-modal__close {
+    min-height: 44px;
+  }
+  .privy-map-panel iframe {
+    height: 240px;
+  }
+  .privy-footer {
+    padding-bottom: calc(36px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 640px) {
+  .privy-header {
+    height: 64px;
+    padding: 0 14px;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+  }
+  .privy-menu-btn span:last-child {
+    display: none;
+  }
+  .privy-header__brand-main {
+    font-size: 14px;
+    letter-spacing: 0.13em;
+    white-space: nowrap;
+  }
+  .privy-header__brand-sub {
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
+  .privy-map-trigger {
+    padding: 7px 11px;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+    min-height: 36px;
+  }
+  .hero-script {
+    font-size: clamp(46px, 13vw, 64px);
+  }
+  .hero-title {
+    font-size: clamp(28px, 8.2vw, 42px);
+    letter-spacing: 0.1em;
+  }
+  .hero-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+  }
+  .triptych-stage {
+    height: 320px;
+  }
+  .triptych-card--center {
+    width: 100%;
+    max-width: 350px;
+  }
+  .dossier-qr {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
